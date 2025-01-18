@@ -1,5 +1,7 @@
 from MathModels.Plot.styles import mp_seaborn_light
 from matplotlib import pyplot as plt
+import seaborn as sns
+import pandas as pd
 
 plt.style.use(mp_seaborn_light())
 
@@ -29,4 +31,15 @@ plt.grid(alpha=0.5, linestyle=':')
 
 # 添加图例(在指定位置显示线条对应的含义)
 plt.legend(loc="upper left")
+plt.show()
+
+# seaborn折线图,数据集需要补充
+employment = None
+plt.gcf().text(.2, .84, 'GENDER', fontsize=40, color='Black') #添加标题
+plt.figure(figsize=(14, 7))
+plt.style.use('ggplot')
+plt.gcf().text(.2, .84, 'GENDER', fontsize=40, color='Black')
+sns.set(rc={'xtick.labelsize':17,'ytick.labelsize':10,'axes.labelsize':15, 'axes.grid':False})
+sns.lineplot(x='Period', y='Unemployed', hue='Gender', style='Gender',data=employment,
+             dashes=False, palette='CMRmap', err_style='bars', ci=70, markers=['o', '>'])
 plt.show()
