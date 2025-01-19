@@ -1,5 +1,6 @@
 from MathModels.Plot.styles import mp_seaborn_light
 from matplotlib import pyplot as plt
+import numpy as np
 import seaborn as sns
 import pandas as pd
 
@@ -20,26 +21,36 @@ y1_high = [i-1 for i in y_1]
 plt.fill_between(x, y1_low, y1_high, color='coral', alpha=0.3)
 plt.plot(x, y_2, label="score2", color="cyan", linestyle='--')
 
-# # 设置x轴刻度
-# _xtick_labels = ["{}岁".format(i) for i in x]
-# plt.xticks(x, _xtick_labels)
-# # plt.yticks(range(0,9))
 
+# 示例数据
+x = np.arange(2006, 2015)  # 年份
+y = np.array([100, 150, 200, 250, 300, 350, 400, 450, 500])  # 假设的数值
 
-# 绘制网格,alpha设置网格透明度
-plt.grid(alpha=0.5, linestyle=':')
+# 绘制折线图
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, marker='o', label='Data')
 
-# 添加图例(在指定位置显示线条对应的含义)
-plt.legend(loc="upper left")
-plt.show()
+# 添加箭头标注
+highlight_year = 2010  # 需要标注的年份
+highlight_index = np.where(x == highlight_year)[0][0]  # 找到对应的索引
+highlight_value = y[highlight_index]  # 找到对应的值
 
-# seaborn折线图,数据集需要补充
-employment = None
-plt.gcf().text(.2, .84, 'GENDER', fontsize=40, color='Black') #添加标题
-plt.figure(figsize=(14, 7))
-plt.style.use('ggplot')
-plt.gcf().text(.2, .84, 'GENDER', fontsize=40, color='Black')
-sns.set(rc={'xtick.labelsize':17,'ytick.labelsize':10,'axes.labelsize':15, 'axes.grid':False})
-sns.lineplot(x='Period', y='Unemployed', hue='Gender', style='Gender',data=employment,
-             dashes=False, palette='CMRmap', err_style='bars', ci=70, markers=['o', '>'])
+plt.annotate(
+    f'Important Point ({highlight_year}, {highlight_value})',  # 标注文本
+    xy=(highlight_year, highlight_value),  # 箭头指向的坐标
+    xytext=(highlight_year - 2, highlight_value + 50),  # 文本位置
+    arrowprops=dict(facecolor="black", edgecolor="black", arrowstyle='->'),  # 箭头样式
+    fontsize=12,
+    color='black'
+)
+
+# 添加标题和标签
+plt.title('Data Over Years with Annotation', fontsize=16)
+plt.xlabel('Year', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+# 添加图例
+plt.legend()
+
+# 显示图表
 plt.show()
